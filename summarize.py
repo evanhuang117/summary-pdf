@@ -13,9 +13,13 @@ def use_coreference():
 # 1. activate python venv "source venv/bin/activate"
 # 2. run "python3 summarize.py 'path to PDF' "
 file_name = sys.argv[1]
+# TODO: find out why this seg faults when true
 use_coref = False
+
 pdf = pdfplumber.open(file_name)
 print("Imported a PDF with " + str(len(pdf.pages)) + " pages")
+#remove file extension from the name
+file_name = file_name.split('.', 1)[0]
 
 # read in the text
 text = ""
@@ -29,6 +33,7 @@ if use_coref:
 else:
     model = Summarizer()
 
+print("summarizing")
 summarized = model(body=text)
 
 ''' uncomment to print to text file
